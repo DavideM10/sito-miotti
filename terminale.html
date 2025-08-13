@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Terminale - Sito di Miotti</title>
+  <link rel="icon" type="image/png" href="img/terminal-icon.png">
+  <style>
+    body {
+      margin: 0;
+      background-color: #000;
+      color: #00ff00;
+      font-family: 'Courier New', Courier, monospace;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .terminal-window {
+      background-color: #000;
+      border: 1px solid #333;
+      width: 700px;
+      height: 400px;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 0 20px #00ff00aa;
+      border-radius: 5px;
+      overflow: hidden;
+    }
+
+    .terminal-header {
+      background-color: #111;
+      color: #ccc;
+      padding: 8px 12px;
+      font-size: 14px;
+      border-bottom: 1px solid #333;
+    }
+
+    .terminal-header::before {
+      content: "●  ●  ●";
+      color: #ff5f56;
+      margin-right: 10px;
+    }
+
+    .terminal-body {
+      flex: 1;
+      padding: 10px;
+      overflow-y: auto;
+      white-space: pre-wrap;
+      font-size: 1rem;
+    }
+
+    .terminal-input {
+      display: flex;
+      padding: 10px;
+      border-top: 1px solid #333;
+    }
+
+    .terminal-input span {
+      margin-right: 8px;
+      user-select: none;
+    }
+
+    .terminal-input input {
+      background: transparent;
+      border: none;
+      outline: none;
+      color: #00ff00;
+      flex: 1;
+      font-family: monospace;
+      font-size: 1rem;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="terminal-window">
+    <div class="terminal-header">Terminale - kali@miotti</div>
+    <div class="terminal-body" id="terminal-output">
+      Benvenuto nel terminale. Scrivi <b>help</b> per vedere i comandi.
+    </div>
+    <div class="terminal-input">
+      <span>kali@miotti:~$</span>
+      <input type="text" id="terminal-input" autocomplete="off" />
+    </div>
+  </div>
+
+  <script>
+    const input = document.getElementById('terminal-input');
+    const output = document.getElementById('terminal-output');
+
+    function printOutput(text) {
+      const div = document.createElement('div');
+      div.textContent = text;
+      output.appendChild(div);
+      output.scrollTop = output.scrollHeight;
+    }
+
+    function handleCommand(cmd) {
+      const command = cmd.trim().toLowerCase();
+      switch (command) {
+        case 'help':
+          printOutput('Comandi disponibili:\nhelp - mostra questo messaggio\nabout - informazioni\nclear - pulisci terminale\necho [testo] - scrive qualcosa\nhome - torna alla home in modo figo');
+          break;
+        case 'about':
+          printOutput('Sito di Miotti - Miotti è un figo.');
+          break;
+        case 'clear':
+          output.innerHTML = '';
+          break;
+        case 'home':
+          printOutput('Tornando alla home...');
+            setTimeout(() => {
+                window.location.href = 'dashboard.html';
+            }, 1000);
+            break;
+        default:
+          if (command.startsWith('echo ')) {
+            printOutput(command.slice(5));
+          } else if (command === '') {
+            // niente
+          } else {
+            printOutput(`Comando non riconosciuto: ${cmd}`);
+          }
+      }
+    }
+
+    input.addEventListener('keydown', function(e) {
+      if (e.key === 'Enter') {
+        const userInput = input.value;
+        printOutput(`kali@miotti:~$ ${userInput}`);
+        handleCommand(userInput);
+        input.value = '';
+      }
+    });
+  </script>
+
+</body>
+</html>

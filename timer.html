@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Timer e Cronometro</title>
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: #f0f0f0;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      height: 100vh;
+      margin: 20px;
+      gap: 40px;
+      flex-wrap: wrap;
+    }
+    .container {
+      background: white;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.1);
+      width: 320px;
+      text-align: center;
+    }
+    h2 {
+      margin-bottom: 20px;
+    }
+    input[type=number] {
+      width: 60px;
+      padding: 8px;
+      margin: 5px;
+      font-size: 1.1rem;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+      text-align: center;
+    }
+    button {
+      background-image: linear-gradient(to right, #32be8f, #38d39f, #32be8f);
+      border: none;
+      color: white;
+      padding: 10px 20px;
+      margin: 10px 5px 0 5px;
+      border-radius: 25px;
+      cursor: pointer;
+      font-size: 1rem;
+      transition: background-position 0.5s;
+      background-size: 200%;
+    }
+    button:hover {
+      background-position: right;
+    }
+    #timerDisplay, #stopwatchDisplay {
+      font-size: 2.8rem;
+      margin-top: 15px;
+      font-weight: bold;
+      font-family: monospace;
+    }
+    .label {
+      font-size: 0.9rem;
+      color: #555;
+    }
+    #backHomeBtn {
+      margin-top: 30px;
+      background-color: #555;
+    }
+    #backHomeBtn:hover {
+      background-color: #333;
+      background-image: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="container" id="timerContainer">
+    <h2>Timer Personalizzabile</h2>
+    <div>
+      <label class="label" for="hours">Ore</label>
+      <input type="number" id="hours" min="0" max="99" value="0" />
+      <label class="label" for="minutes">Minuti</label>
+      <input type="number" id="minutes" min="0" max="59" value="0" />
+      <label class="label" for="seconds">Secondi</label>
+      <input type="number" id="seconds" min="0" max="59" value="0" />
+    </div>
+    <button id="startTimerBtn">Avvia Timer</button>
+    <button id="resetTimerBtn">Resetta Timer</button>
+    <div id="timerDisplay">00:00:00</div>
+  </div>
+
+  <div class="container" id="stopwatchContainer">
+    <h2>Cronometro</h2>
+    <div id="stopwatchDisplay">00:00:00</div>
+    <button id="startStopwatchBtn">Avvia</button>
+    <button id="pauseStopwatchBtn" disabled>Pause</button>
+    <button id="resetStopwatchBtn" disabled>Resetta</button>
+  </div>
+
+  <button id="backHomeBtn" onclick="location.href='dashboard.html'">Torna alla Home</button>
+
+<script>
+  // TIMER
+  let timerInterval;
+  const timerDisplay = document.getElementById('timerDisplay');
+  const startTimerBtn = document.getElementById('startTimerBtn');
+  const resetTimerBtn = document.getElementById('resetTimerBtn');
+
+  function formatTime(t) {
+    return t.toString().padStart(2, '0');
+  }
+
+  startTimerBtn.addEventListener('click', () => {
+    clearInterval(timerInterval);
+
+    let h = parseInt(document.getElementById('hours').value) || 0;
+    let m = parseInt(document.getElementById('minutes').value) || 0;
+    let s = parseInt(document.getElementById('seconds').value) || 0;
+
+    let totalSeconds = h*3600 + m*60 + s;
+
+    if(totalSeconds <= 0) {
+      alert("Inserisci un tempo maggiore di zero");
+      return;
+    }
+
+    startTimerBtn.disabled = true;
+
+    timerInterval = setInterval(() => {
+      let hrs = Math.floor(totalSeconds / 3600);
+      let mins = Math.floor((totalSeconds % 3600) / 60);
+      let secs = totalSeconds % 60;
+
+      timerDisplay.textContent = `${formatTime(hrs)}:${formatTime(mins)}:${formatTime(secs)}`;
+
+      if(totalSeconds <= 0) {
+        clearInterval(timerInterval);
+        startTimerBtn.disabled = false;
+        alert("Tempo scaduto!");
+      }
+      totalSeconds--;
+    }, 1000);
+  });
+
+  resetTimerBtn.addEventListener('click', () => {
+    clearInterval(timerInterval);
+    timerDisplay.textContent = "00:00:00";
+    startTimerBtn.disabled = false;
+  });
+
+  // CRONOMETRO
+  let stopwatchInterval;
+  let stopwatchTime = 0; // in seconds
+  const stopwatchDisplay = document.getElementById('stopwatchDisplay');
+  const startStopwatchBtn = document.getElementById('startStopwatchBtn');
+  const pauseStopwatchBtn = document.getElementById('pauseStopwatchBtn');
+  const resetStopwatchBtn = document.getElementById('resetStopwatchBtn');
+
+  function updateStopwatchDisplay() {
+    let hrs = Math.floor(stopwatchTime / 3600);
+    let mins = Math.floor((stopwatchTime % 3600) / 60);
+    let secs = stopwatchTime % 60;
+    stopwatchDisplay.textContent = `${formatTime(hrs)}:${formatTime(mins)}:${formatTime(secs)}`;
+  }
+
+  startStopwatchBtn.addEventListener('click', () => {
+    startStopwatchBtn.disabled = true;
+    pauseStopwatchBtn.disabled = false;
+    resetStopwatchBtn.disabled = false;
+
+    stopwatchInterval = setInterval(() => {
+      stopwatchTime++;
+      updateStopwatchDisplay();
+    }, 1000);
+  });
+
+  pauseStopwatchBtn.addEventListener('click', () => {
+    clearInterval(stopwatchInterval);
+    startStopwatchBtn.disabled = false;
+    pauseStopwatchBtn.disabled = true;
+  });
+
+  resetStopwatchBtn.addEventListener('click', () => {
+    clearInterval(stopwatchInterval);
+    stopwatchTime = 0;
+    updateStopwatchDisplay();
+    startStopwatchBtn.disabled = false;
+    pauseStopwatchBtn.disabled = true;
+    resetStopwatchBtn.disabled = true;
+  });
+
+  // inizializza display
+  updateStopwatchDisplay();
+</script>
+</body>
+</html>
