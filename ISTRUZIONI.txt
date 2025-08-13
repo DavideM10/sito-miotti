@@ -1,0 +1,18 @@
+Ciao amico, sono Miotti e questo è il file .zip del mio sito.
+
+Per visionalo devi prima estrarre i file, lo hai gia fatto? Perfetto.
+Ora apri con il tuo browser il file login.html.
+
+Nome Utente: miotti
+Password: 123456
+
+_____________________________________________
+
+IMPORTANTE:
+Non modificare le directory dei file o si romperà tutto.
+(non spostare i file dalla cartella, ignorante)
+
+Non provare a cambiare o vedere il codice anche se dubito tu ce la possa fare, se ti ho mandato questo sito significa che sei un incapace con il PC.
+_____________________________________________
+
+Buon divertimento!!
