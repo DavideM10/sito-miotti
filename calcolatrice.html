@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Calcolatrice Avanzata</title>
+  <link rel="icon" href="img/calculator-icon.png" />
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      background: linear-gradient(to right, #0f2027, #203a43, #2c5364);
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .calculator {
+      background-color: #1e1e2f;
+      border-radius: 15px;
+      box-shadow: 0 0 25px rgba(0, 255, 255, 0.3);
+      padding: 20px;
+      width: 400px;
+      max-width: 90%;
+    }
+
+    .display {
+      background: #000;
+      color: #00ffcc;
+      font-size: 2rem;
+      padding: 15px;
+      border-radius: 10px;
+      text-align: right;
+      overflow-x: auto;
+      white-space: nowrap;
+    }
+
+    .buttons {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 15px;
+      margin-top: 20px;
+    }
+
+    button {
+      padding: 20px;
+      font-size: 1.2rem;
+      border: none;
+      border-radius: 10px;
+      background-color: #282c34;
+      color: #fff;
+      cursor: pointer;
+      transition: 0.2s ease;
+    }
+
+    button:hover {
+      background-color: #00c6a9;
+      transform: scale(1.05);
+    }
+
+    .operator {
+      background-color: #ff5e57;
+    }
+
+    .operator:hover {
+      background-color: #ff2e2e;
+    }
+
+    .equal {
+      grid-column: span 2;
+      background-color: #00c6a9;
+    }
+
+    .equal:hover {
+      background-color: #00a991;
+    }
+
+    .clear {
+      background-color: #f39c12;
+    }
+
+    .clear:hover {
+      background-color: #e67e22;
+    }
+
+    @media screen and (max-width: 480px) {
+      .display {
+        font-size: 1.5rem;
+      }
+    }
+
+    .btn-home {
+        display: inline-block;
+        background-image: linear-gradient(to right, #32be8f, #38d39f, #32be8f);
+        color: white;
+        padding: 12px 25px;
+        border-radius: 25px;
+        text-decoration: none;
+        font-size: 1rem;
+        font-weight: bold;
+        transition: 0.4s;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .btn-home:hover {
+        background-position: right;
+        transform: scale(1.05);
+        }
+
+  </style>
+</head>
+<body>
+  <div class="calculator">
+    <div style="text-align: center; margin-top: 30px;">
+        <a href="dashboard.html" class="btn-home">⬅ Torna alla Home</a>
+    </div>
+    <div class="display" id="display">0</div>
+    <div class="buttons">
+      <button class="clear" onclick="clearDisplay()">C</button>
+      <button onclick="append('%')">%</button>
+      <button onclick="append('**')">^</button>
+      <button class="operator" onclick="append('/')">÷</button>
+
+      <button onclick="append('7')">7</button>
+      <button onclick="append('8')">8</button>
+      <button onclick="append('9')">9</button>
+      <button class="operator" onclick="append('*')">×</button>
+
+      <button onclick="append('4')">4</button>
+      <button onclick="append('5')">5</button>
+      <button onclick="append('6')">6</button>
+      <button class="operator" onclick="append('-')">−</button>
+
+      <button onclick="append('1')">1</button>
+      <button onclick="append('2')">2</button>
+      <button onclick="append('3')">3</button>
+      <button class="operator" onclick="append('+')">+</button>
+
+      <button onclick="append('0')">0</button>
+      <button onclick="append('.')">.</button>
+      <button class="equal" onclick="calculate()">=</button>
+    </div>
+  </div>
+
+  <script>
+    const display = document.getElementById('display');
+
+    function append(character) {
+      if (display.innerText === '0' || display.innerText === 'Errore') {
+        display.innerText = character;
+      } else {
+        display.innerText += character;
+      }
+    }
+
+    function clearDisplay() {
+      display.innerText = '0';
+    }
+
+    function calculate() {
+      try {
+        display.innerText = eval(display.innerText.replace('^', '**'));
+      } catch {
+        display.innerText = 'Errore';
+      }
+    }
+  </script>
+</body>
+</html>
