@@ -4,6 +4,7 @@
   <title>Registrazione</title>
   <link rel="icon" type="image/png" href="img/favicon_degan.png">
   <link rel="stylesheet" type="text/css" href="css/style.css">
+  <link rel="stylesheet" type="text/css" href="css/ui.css">
   <link href="https://fonts.googleapis.com/css?family=Poppins:600&display=swap" rel="stylesheet">
   <script src="https://kit.fontawesome.com/a81368914c.js"></script>
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -15,16 +16,16 @@
       <img src="img/subscribe.png">
     </div>
     <div class="login-content">
-      <form action="login.html">
+      <form>
         <img src="img/avatar.jpg">
-        <h2 class="title">Registrati pirla!</h2>
+        <h2 class="title">Registrati</h2>
         <div class="input-div one">
           <div class="i">
             <i class="fas fa-user"></i>
           </div>
           <div class="div">
             <h5>Nome Utente</h5>
-            <input type="text" class="input" required>
+            <input type="text" class="input" name="username" required>
           </div>
         </div>
         <div class="input-div two">
@@ -32,8 +33,8 @@
             <i class="fas fa-envelope"></i>
           </div>
           <div class="div">
-            <h5>Email :)</h5>
-            <input type="email" class="input" required>
+            <h5>Email</h5>
+            <input type="email" class="input" name="email" required>
           </div>
         </div>
         <div class="input-div pass">
@@ -42,14 +43,25 @@
           </div>
           <div class="div">
             <h5>Password</h5>
-            <input type="password" class="input" required>
+            <input type="password" class="input" name="password" required minlength="8">
+          </div>
+        </div>
+        <div class="input-div pass">
+          <div class="i">
+            <i class="fas fa-lock"></i>
+          </div>
+          <div class="div">
+            <h5>Conferma Password</h5>
+            <input type="password" class="input" name="confirm_password" required minlength="8">
           </div>
         </div>
         <input type="submit" class="btn" value="Register">
-        <p class="paragrafo-login">Hai già un account? <a href="index.html">Login</a></p>
+        <p class="paragrafo-login">Hai gia un account? <a href="index.html">Login</a></p>
       </form>
     </div>
   </div>
-  <script type="text/javascript" src="js/main.js"></script>
+  <script src="js/ui.js"></script>
+  <script src="js/auth-store.js"></script>
+  <script src="js/register.js"></script>
 </body>
 </html>
