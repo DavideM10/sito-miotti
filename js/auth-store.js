@@ -3,7 +3,7 @@
   var DEFAULT_USER = {
     username: 'miotti',
     email: 'miotti@example.com',
-    password: '123456'
+    password: 'vivaDuce'
   };
 
   var HASH_ALG = 'SHA-256';
