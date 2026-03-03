@@ -43,7 +43,7 @@
 
     notify('Password aggiornata con successo', 'success');
     setTimeout(function () {
-      window.location.href = 'login.html';
+      window.location.href = 'index.html';
     }, 900);
   }
 
