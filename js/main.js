@@ -19,19 +19,17 @@ inputs.forEach(input => {
 
 const form = document.querySelector('form');
 
-form.addEventListener('submit', function(e) {
+form.addEventListener('submit', async function(e) {
   e.preventDefault();
 
   const username = form.username.value.trim();
   const password = form.password.value.trim();
 
-  const USER = "miotti";
-  const PASS = "123456";
-
-  if(username === USER && password === PASS){
+  const res = await AuthStore.validateLogin(username, password);
+  if (res.ok) {
     alert("Login effettuato con successo!");
     window.location.href = "dashboard.html";
   } else {
-    alert("Credenziali errate, riprova!");
+    alert(res.error || "Credenziali errate");
   }
 });
